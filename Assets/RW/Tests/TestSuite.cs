@@ -86,5 +86,32 @@ public class TestSuite
         Assert.AreEqual(game.score, 1);
     }
 
+    [UnityTest]
+    public IEnumerator TestMovingLeft()
+    {
+        float startPositionX = game.GetShip().transform.position.x;
+        game.GetShip().MoveLeft();
+        float updatedXPosition = game.GetShip().transform.position.x;
+        yield return new WaitForSeconds(0.1f);
+        Assert.Less(updatedXPosition, startPositionX);
+    }
 
+    [UnityTest]
+    public IEnumerator TestMovingRight()
+    {
+        float startPositionX = game.GetShip().transform.position.x;
+        game.GetShip().MoveRight();
+        float updatedXPosition = game.GetShip().transform.position.x;
+        yield return new WaitForSeconds(0.1f);
+        Assert.Greater(updatedXPosition, startPositionX);
+    }
+
+    [UnityTest]
+    public IEnumerator ResetScoreOnNewGame()
+    {
+        game.isGameOver = true;
+        game.NewGame();
+        yield return new WaitForSeconds(0.1f);
+        Assert.AreEqual(game.score, 0);
+    }
 }
